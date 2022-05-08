@@ -19,7 +19,7 @@ def login():
                 session['id'] = account['UID'] 
                 session['EMAIL'] = account['EMAIL']
                 flash("Logged inn successfully",category="success")
-                return render_template("home.html") # we have just logged inn so directly render the template 
+                return redirect(url_for("views.home")) # we have just logged inn so directly render the template 
             else:
                 flash("Email and password not found -- Register again",category="error")
                 return redirect(url_for("auth.sign_up"))

@@ -41,11 +41,11 @@ def home():
             input_new_opening=np.delete(input_new_opening,0,axis=0)
             input_new_opening=np.append(input_new_opening,tomorrow_prediction,axis=0)
             
-            print(prediction_array)
+        print(prediction_array)   
 
 
          
-        return render_template("home.html",value=tomorrow_result)
+        return render_template("home.html",value=tomorrow_result,monkaprice=prediction_array)
 
      else:
         return redirect(url_for('auth.login'))
