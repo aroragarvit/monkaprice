@@ -80,7 +80,7 @@ def sign_up():
      
 # By default .route is get method 
 # Even if i am rendering different html from same route  we kept remaining on the same route only 
-# In get method we can get params of url like subreddit we have done and we cas use those params for our searches in databse 
+# In get method we can get params of url like subreddit we have done and we cas use those params for our searches in databse or we can make a form and get subreddit from that form using javascript and then do get request to that subreddit also like using axios.get 
 # Rendering and redirecting are different  rendering is rendering a template and redirecting is like .get to the url
 # In post we can get the details from the form 
 # learn about url_for for static files and downloading static files
