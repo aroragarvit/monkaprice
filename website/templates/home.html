@@ -5,34 +5,55 @@
 <!-- Enter whatever you want to in your blocks of base page -->
 
 {%block content%}
+<button id="btc" class="primary" onclick="predict('btc')">Predict BTC</button>
+<button id="eth" class="primary" onclick="predict('eth')">Predict ETH</button>
+
 <script
   type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/chart.js"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+  integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
 ></script>
 <div>
   <canvas id="myChart"></canvas>
 </div>
 <script>
-  const labels = ["January", "February", "March", "April", "May", "June"];
-
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: "My First dataset",
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgb(255, 99, 132)",
-        data: [0, 10, 5, 2, 20, 30, 45],
-      },
-    ],
-  };
-
-  const config = {
-    type: "line",
-    data: data,
-    options: {},
-  };
-  const myChart = new Chart(document.getElementById("myChart"), config);
+  //Predict Currency
+  async function predict(currency) {
+    const res = await axios.get("http://localhost:5000/values/" + currency);
+    console.log(res);
+    const label1 = await Object.keys(res.data.previous);
+    const label2 = await Object.keys(res.data.predictions);
+    const label = label1.concat(label2);
+    console.log(label);
+    let datapoints1 = [];
+    const datapoints2 = await Object.values(res.data.predictions);
+    label1.forEach((ele) => {
+      datapoints1.push(res.data.previous[ele].Open);
+    });
+    const datapoints = datapoints1.concat(datapoints2);
+    console.log(datapoints);
+    const data2 = {
+      labels: label,
+      datasets: [
+        {
+          label: "Next Month Predictions",
+          backgroundColor: "rgb(255, 99, 132)",
+          borderColor: "rgb(255, 99, 132)",
+          data: datapoints,
+        },
+      ],
+    };
+    const config = {
+      type: "line",
+      data: data2,
+      options: {},
+    };
+    const myChart = new Chart(document.getElementById("myChart"), config);
+  }
 </script>
-<h1>This is a tomorrow price for bitcoin {{value}} and {{monkaprice}}</h1>
 {%endblock%}

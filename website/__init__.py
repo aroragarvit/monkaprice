@@ -2,6 +2,7 @@
 
 
 from flask import Flask
+from flask_cors import CORS
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 mysql=MySQL()                       # create your data base
@@ -9,6 +10,7 @@ mysql=MySQL()                       # create your data base
 
 def create_app():
     app=Flask(__name__)
+    CORS(app)
     app.config['SECRET_KEY']='GSsdgsdc'
 
     app.config['MYSQL_HOST'] = 'localhost'
